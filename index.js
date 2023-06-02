@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb+srv://wnguddl96:abcd1234@boilerplate.isywfmu.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('config.mongoURI', {
         useNewUrlParser: true, useUnifiedTopology: true,
     }).then(() => console.log('MongoDB Connected..'))
     .catch(err => console.log(err));
