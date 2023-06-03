@@ -52,6 +52,34 @@ userSchema.pre('save', function(next){
     }
 })
 
+userSchema.methods.comparePassword = function(plainPassword, callBack) {
+
+    //plainPassword 1234567 <-> db정보(암호화된 비밀번호)
+    // 암호화후 비교해야함
+    bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+        if(err) return callBack(err),
+        callBack(null, isMatch)
+    })
+}
+
+userSchema.methods.generateToken = function(callback) {
+    
+    var user = this;
+    
+    //jsontoken을 이용해서 token 생성하기
+    var token = jwt.sign(user._id, `secretToken`)
+
+    user._id + 'secretToken' = token
+
+    user.toKen = token
+    user.save(function(err, user {
+        if(err) return callback(err)
+        callback(null, user)
+    }))
+
+    `secretToken` -> user._id
+}
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = { User };
